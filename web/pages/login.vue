@@ -1,4 +1,8 @@
 <script lang="ts" setup>
+  definePageMeta({
+    middleware: ['guest']
+  })
+
   import { useAuthStore } from '~/stores/useAuthStore';
 
   const form = ref({
@@ -10,6 +14,10 @@
 
   async function handleLogin() {
     const { error } = await auth.login(form.value)
+
+    if(! error.value) {
+      return navigateTo("/");
+    }
   }
 </script>
 
